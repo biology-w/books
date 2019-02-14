@@ -12,7 +12,7 @@ var emulation = require('fs').readFileSync("EventSourceEmulation.js");
 // An array of ServerResponse objects that we're going to send events to
 var clients = [];
 
-// Send a comment to the clients every 20 seconds so they don't 
+// Send a comment to the clients every 20 seconds so they don't
 // close the connection and then reconnect
 setInterval(function() {
     clients.forEach(function(client) {
@@ -21,7 +21,7 @@ setInterval(function() {
 }, 20000);
 
 // Create a new server
-var server = new http.Server();  
+var server = new http.Server();
 
 // When the server gets a new request, run this function
 server.on("request", function (request, response) {
@@ -50,7 +50,7 @@ server.on("request", function (request, response) {
         // When we get a chunk of data, add it to the body
         request.on("data", function(chunk) { body += chunk; });
 
-        // When the request is done, send an empty response 
+        // When the request is done, send an empty response
         // and broadcast the message to all listening clients.
         request.on("end", function() {
             response.writeHead(200);   // Respond to the request
@@ -66,7 +66,7 @@ server.on("request", function (request, response) {
     }
     // Otherwise, a client is requesting a stream of messages
     else {
-        // Set the content type and send an initial message event 
+        // Set the content type and send an initial message event
         response.writeHead(200, {'Content-Type': "text/event-stream" });
         response.write("data: Connected\n\n");
 
